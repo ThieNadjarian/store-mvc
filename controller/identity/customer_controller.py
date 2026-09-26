@@ -1,4 +1,4 @@
-# Note a clareza nos imports! 
+from view.identity import CustomerView
 
 # Traga a view do consumidor do domínio de identidades
 # Você também pode criar um init em view/identity para importar a classe de view.identity
