@@ -1,3 +1,4 @@
+from checkout import Order
 from model.checkout import Order, Cart
 from model.identity import Customer
 from model.product import Product
@@ -19,10 +20,13 @@ class CheckoutController:
         self._view.show_cart(self._cart)
 
     def confirm(self) -> Order | None:
-        self._view.show_cart(self._cart)
-        self._view.show_cart(self._cart)
+        #self._view.show_cart(self._cart)
+        if not self._cart:
+            raise ValueError("No open cart")
+
+        else :self._view.show_cart(self._cart)
         if self._view.confirm_prompt():
-            print("Obrigado por comprar conosco!") # Deixando minha marca no projeto!
+            self._view.thanks()
             order = Order(self._cart)
             self._orders.append(order)
             self._view.show_order(order)
@@ -30,5 +34,10 @@ class CheckoutController:
         return None
 
     def advance(self) -> None:
-        # TODO: Vou pra casa agora
-        pass
+        if not self._orders:
+            raise ValueError("No orders")
+
+        else:
+            for order in self._orders:
+                order.advance_status()
+                self._view.show_status(order)
