@@ -13,18 +13,22 @@ class Shelf:
     def items(self):
         return list(self._items)
 
+    #Adiciona o Item que eu quero ao Estoque
     def add_item(self, item: StockItem) -> None:
         self._items.append(item)
 
+    #Dado um codigo eu procuro item no Estoque
     def find(self, sku: str) -> StockItem | None:
         for item in self._items:
             if str(item.product.sku) == sku:
                 return item
         return None
 
+    #Sting Legivel
     def __str__(self):
         return f"Shelf({self._code})"
-    
+
+    #Retorna Um objeto em formato de String
     def __repr__(self):
         return f"Shelf(code={self._code!r}, items={len(self._items)})"
 
@@ -42,9 +46,11 @@ class Aisle:
     def shelves(self):
         return list(self._shelves)
 
+    #Adiciona um Item a Pratileira
     def add_shelf(self, shelf: Shelf) -> None:
         self._shelves.append(shelf)
 
+    #Procura um item no Estoque a partir da Pratileira
     def find(self, sku: str) -> StockItem | None:
         for shelf in self._shelves:
             item = shelf.find(sku)

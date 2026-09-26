@@ -19,17 +19,21 @@ class Cash(Payment):
     def __init__(self, tendered: float):
         self._tendered = tendered
 
-    def process(self, order: "Order") -> None:
-        # TODO: faço depois do cafézinho
-        pass
+    # Feito por mim
+    def process(self, order: "Order") -> Receipt:
+        receipt = self._make_receipt(order, f"Cash: {self._tendered}")
+        order.advance_status()
+        return receipt
 
 class Card(Payment):
     def __init__(self, last4: str):
         self._last4 = last4
 
+    # Feito  por mim
     def process(self, order: "Order") -> None:
-        # TODO: faço depois do cafézinho
-        pass
+        receipt = self._make_receipt(order, f"Card: {self._last4}")
+        order.advance_status()
+        return receipt
 
 class Pix(Payment):
     def __init__(self, key: str):
