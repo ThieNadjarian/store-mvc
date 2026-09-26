@@ -37,14 +37,25 @@ class Cart:
         return list(self._items)
 
     def add(self, product: Product, qty: int) -> None:
-        for item in self._items:
+        achou = False
+        posicao = 0
+
+        #for item in self._items:
+        while posicao < len(self._items) and not achou:
+            #Item esta pegando o item dql posicao da lista
+            item = self._items[posicao]
+
             if item.product.sku == product.sku:
-                # TODO: o que fazer aqui?
-                # remover o item antigo e adicionar um novo com qty somada?
-                # ou modificar o item existente?
-                # lembre que LineItem e imutavel... ou deveria ser?
-                pass
-        self._items.append(LineItem(product, qty))
+                achou = True
+                qty += item.quantity
+                item_substituido = LineItem(product, qty)
+                #Caso ache o item que esta no carrino faz a substituicao dele na mesma posição
+                self._items[posicao] = item_substituido
+
+            posicao += 1
+
+        if not achou:
+            self._items.append(LineItem(product, qty))
 
     def remove(self, sku: str) -> None:
         self._items = [i for i in self._items if str(i.product.sku) != sku]

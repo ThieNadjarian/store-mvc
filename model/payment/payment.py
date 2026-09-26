@@ -30,7 +30,7 @@ class Card(Payment):
         self._last4 = last4
 
     # Feito  por mim
-    def process(self, order: "Order") -> None:
+    def process(self, order: "Order") -> Receipt:
         receipt = self._make_receipt(order, f"Card: {self._last4}")
         order.advance_status()
         return receipt
