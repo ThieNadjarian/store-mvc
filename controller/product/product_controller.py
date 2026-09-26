@@ -31,4 +31,10 @@ class ProductController:
             product.policy = policy
             
     def prompt_choice(self) -> Product | None:
-        pass
+        if not self._products:
+            return None
+
+        self._view.show_table(self._products)
+        posicao = self._view.prompt_index(len(self._products))
+        produto_escolhido = self._products[posicao]
+        return produto_escolhido
